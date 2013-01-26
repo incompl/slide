@@ -1,0 +1,17 @@
+body {
+  font-size: 2em;
+}
+
+h1 {
+  padding: 1em 0;
+  text-align: center;
+}
+
+#wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hidden {
+  opacity: 0;
+}
