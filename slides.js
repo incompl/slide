@@ -17,13 +17,18 @@ $(function() {
 
   function enterSlideMode() {
     slideMode = true;
-    var $slide = $(window.location.hash);
-    gotoSlide($slide.length > 0 ? $slide : 0, true);
+    var $slide = findClosestSlide();
+    $("body").scrollTop($slide.position().top);
+    gotoSlide($slide);
+    $("body").css("margin-bottom", $(window).height() + "px");
+    message("Slide Mode");
   }
 
   function exitSlideMode() {
     slideMode = false;
     $(".slide").removeClass("hidden", "fast");
+    $("body").css("margin-bottom", "0px");
+    message("Webpage Mode");
   }
 
   function gotoSlide(n, andPosition) {
@@ -40,7 +45,7 @@ $(function() {
       $slide = $slides.eq(n);
     }
     slide = n;
-    $slides.not($slide).addClass("hidden", "fast");
+    $slides.not($slide).addClass("hidden");
     $slide.removeClass("hidden", "fast");
     var id;
     if (andPosition) {
@@ -62,11 +67,25 @@ $(function() {
     var scrollTop = $("body").scrollTop();
     $slides.each(function() {
       var $slide = $(this);
-      if (!$closest || $slide.position().top < scrollTop) {
+      if (!$closest || $slide.position().top <
+                       scrollTop + ($(window).height() / 2)) {
         $closest = $slide;
       }
     });
     return $closest;
+  }
+
+  function message(str) {
+    var $msg = $("<div></div>", {
+      "class": "message",
+      text: str
+    });
+    $("body").prepend($msg);
+    window.setTimeout(function() {
+      $msg.addClass("hidden", "fast", "", function() {
+        $msg.remove();
+      });
+    }, 200);
   }
 
   $(document).on("keydown", function(e) {

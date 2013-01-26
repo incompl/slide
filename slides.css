@@ -15,3 +15,15 @@ h1 {
 .hidden {
   opacity: 0;
 }
+
+.message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.8);
+  color: white;
+  padding: .3em;
+  margin: .3em;
+  -webkit-border-radius: .25em;
+          border-radius: .25em;
+}
