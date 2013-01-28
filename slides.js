@@ -32,11 +32,14 @@ $(function() {
   var totalSlides = $slides.length;
   var moving = false;
 
+  // Add IDs for all slides
   for (i = 0; i < $slides.length; i++) {
     if (!$slides.eq(i).attr("id")) {
       $slides.eq(i).attr("id", "slide" + (i + 1));
     }
-  } 
+  }
+  // Scroll to hash location in case ID didn't exist on page load
+  window.location.hash = window.location.hash;
 
   function enterSlideMode() {
     slideMode = true;
