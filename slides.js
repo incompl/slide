@@ -42,7 +42,6 @@ $(function() {
     slideMode = true;
     var $slide = findClosestSlide();
     $("body").css("margin-bottom", $(window).height() + "px");
-    $(window).scrollTop($slide.position().top);
     gotoSlide($slide);
     message("Slide Mode");
   }
@@ -69,7 +68,6 @@ $(function() {
     }
     slide = n;
     $slides.not($slide).addClass("hidden");
-    $slide.removeClass("hidden", "fast");
     var id;
     if (andPosition) {
       window.location.hash = $slide.attr("id");
@@ -80,9 +78,9 @@ $(function() {
       window.location.hash = id;
       $slide.attr("id", id);
     }
-    window.setTimeout(function() {
+    $slide.removeClass("hidden", "fast", function() {
       moving = false;
-    }, 10);
+    });
   }
 
   function findClosestSlide() {
@@ -111,7 +109,7 @@ $(function() {
     }, 200);
   }
 
-  $(document).on("keydown", function(e) {
+  $(document).on("keydown", debounce(function(e) {
 
     // escape
     if (e.keyCode === 27) {
@@ -137,8 +135,8 @@ $(function() {
       }
     }
 
-  })
-  .on("scroll", function(e) {
+  }, 200))
+  .on("scroll", debounce(function(e) {
     if (!slideMode || moving) {
       return;
     }
@@ -146,6 +144,23 @@ $(function() {
     if ($closestSlide.attr("id") !== $slides.eq(slide).attr("id")) {
       gotoSlide($closestSlide);
     }
-  });
+  }));
+
+  function debounce(func, threshold, execAsap) {
+    var timeout;
+    return function debounced () {
+        var obj = this, args = arguments;
+        function delayed () {
+            if (!execAsap)
+                func.apply(obj, args);
+            timeout = null; 
+        };
+        if (timeout)
+            clearTimeout(timeout);
+        else if (execAsap)
+            func.apply(obj, args);
+        timeout = setTimeout(delayed, threshold || 100); 
+    };
+  }
 
 });
