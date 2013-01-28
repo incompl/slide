@@ -41,7 +41,8 @@ $(function() {
   function enterSlideMode() {
     slideMode = true;
     var $slide = findClosestSlide();
-    $("body").css("margin-bottom", $(window).height() + "px");
+    $("body").css("margin-bottom",
+                  ($(window).height() - $(".slide").last().height()) + "px");
     gotoSlide($slide);
     message("Slide Mode");
   }
