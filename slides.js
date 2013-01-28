@@ -39,7 +39,9 @@ $(function() {
     }
   }
   // Scroll to hash location in case ID didn't exist on page load
-  window.location.hash = window.location.hash;
+  var hash = window.location.hash;
+  window.location.hash = "";
+  window.location.hash = hash;
 
   function enterSlideMode() {
     slideMode = true;
