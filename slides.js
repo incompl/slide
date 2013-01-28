@@ -41,9 +41,9 @@ $(function() {
   function enterSlideMode() {
     slideMode = true;
     var $slide = findClosestSlide();
-    $("body").scrollTop($slide.position().top);
-    gotoSlide($slide);
     $("body").css("margin-bottom", $(window).height() + "px");
+    $(window).scrollTop($slide.position().top);
+    gotoSlide($slide);
     message("Slide Mode");
   }
 
@@ -87,7 +87,7 @@ $(function() {
 
   function findClosestSlide() {
     var $closest;
-    var scrollTop = $("body").scrollTop();
+    var scrollTop = $(window).scrollTop();
     $slides.each(function() {
       var $slide = $(this);
       if (!$closest || $slide.position().top <
