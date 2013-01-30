@@ -95,11 +95,10 @@ $(function() {
     $slide.removeClass("hidden", "fast", function() {
       moving = false;
       if (isTouchDevice()) {
-        var $turd = $("<div></div>", {
+        $("<div>", {
           id: "turd",
           style: "height: 1px;"
-        })
-        $("body").append($turd);
+        }).appendTo("body");
       }
     });
   }
