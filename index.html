@@ -10,13 +10,34 @@
     <script src="slide.js"></script>
   </head>
   <body>
+
+    <div id="touch">
+      <button id="start">start presentation</button>
+      <button id="done">done</button>
+      <button id="prev">prev</button>
+      <button id="next">next</button>
+    </div>
+
     <div id="wrapper">
 
       <div class="slide">
         <h1>
-          <img style="float: left;" src="images/tylerdurden.png">
+          <style>
+            /* I like to put slide-specific hacks in the slide,
+            which I'd never do in a webapp of course ;) */
+            #logoLeft {
+              float: left;
+            }
+            #logoRight {
+              float: right;
+            }
+            #logoLeft, #logoRight {
+              max-width: 25%;
+            }
+          </style>
+          <img id="logoLeft" src="images/tylerdurden.png">
           Slide
-          <img style="float: right;" src="images/powerpenguin.png">
+          <img id="logoRight" src="images/powerpenguin.png">
         </h1>
         <h2>JavaScript slides without pain</h2>
         <p>

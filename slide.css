@@ -12,6 +12,29 @@ h1 {
   margin: 0 auto;
 }
 
+#touch {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: .3em;
+  z-index: 999999;
+}
+
+#touch button {
+  font-size: 1em;
+  background-color: rgba(0,0,0,.8);
+  color: white;
+  border: none;
+  padding: .3em;
+  -webkit-border-radius: .25em;
+          border-radius: .25em;
+}
+
+#done, #next, #prev {
+  display: none;
+}
+
 .hidden {
   opacity: 0;
 }
@@ -26,4 +49,13 @@ h1 {
   margin: .3em;
   -webkit-border-radius: .25em;
           border-radius: .25em;
+}
+
+@media screen and (max-width:599px) {
+  body {
+    font-size: 1.5em;
+  }
+  img {
+    max-width: 100%;
+  }
 }

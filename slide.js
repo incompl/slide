@@ -50,6 +50,8 @@ $(function() {
                   ($(window).height() - $(".slide").last().height()) + "px");
     gotoSlide($slide);
     message("Slide Mode");
+    $("#start").hide();
+    $("#done, #next, #prev").show();
   }
 
   function exitSlideMode() {
@@ -57,6 +59,8 @@ $(function() {
     $(".slide").removeClass("hidden", "fast");
     $("body").css("margin-bottom", "0px");
     message("Webpage Mode");
+    $("#start").show();
+    $("#done, #next, #prev").hide();
   }
 
   function gotoSlide(n, andPosition) {
@@ -84,8 +88,19 @@ $(function() {
       window.location.hash = id;
       $slide.attr("id", id);
     }
+
+    // The turd is my workaround for
+    // https://github.com/scottjehl/Device-Bugs/issues/1
+    $("#turd").remove();
     $slide.removeClass("hidden", "fast", function() {
       moving = false;
+      if (isTouchDevice()) {
+        var $turd = $("<div></div>", {
+          id: "turd",
+          style: "height: 1px;"
+        })
+        $("body").append($turd);
+      }
     });
   }
 
@@ -152,6 +167,22 @@ $(function() {
     }
   }));
 
+  $("#start").on("click", debounce(function(e) {
+    enterSlideMode();
+  }));
+
+  $("#done").on("click", debounce(function(e) {
+    exitSlideMode();
+  }));
+
+  $("#next").on("click", debounce(function(e) {
+    gotoSlide(slide + 1, true);
+  }));
+
+  $("#prev").on("click", debounce(function(e) {
+    gotoSlide(slide - 1, true);
+  }));
+
   function debounce(func, threshold, execAsap) {
     var timeout;
     return function debounced () {
@@ -167,6 +198,15 @@ $(function() {
             func.apply(obj, args);
         timeout = setTimeout(delayed, threshold || 100); 
     };
+  }
+
+  function isTouchDevice() {
+    return !!('ontouchstart' in window) // works on most browsers 
+        || !!('onmsgesturechange' in window); // works on ie10
+  };
+
+  if (isTouchDevice()) {
+    $("#touch").show();
   }
 
 });
