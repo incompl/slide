@@ -31,6 +31,7 @@ $(function() {
   var slide;
   var totalSlides = $slides.length;
   var moving = false;
+  var marginBottomHeight;
 
   // Add IDs for all slides
   for (i = 0; i < $slides.length; i++) {
@@ -46,6 +47,7 @@ $(function() {
   function enterSlideMode() {
     slideMode = true;
     var $slide = findClosestSlide();
+    marginBottomHeight = $("body").css("margin-bottom");
     $("body").css("margin-bottom",
                   ($(window).height() - $(".slide").last().height()) + "px");
     gotoSlide($slide);
@@ -57,7 +59,7 @@ $(function() {
   function exitSlideMode() {
     slideMode = false;
     $(".slide").removeClass("hidden", "fast");
-    $("body").css("margin-bottom", "0px");
+    $("body").css("margin-bottom", marginBottomHeight);
     message("Webpage Mode");
     $("#start").show();
     $("#done, #next, #prev").hide();
@@ -206,6 +208,7 @@ $(function() {
 
   if (isTouchDevice()) {
     $("#touch").show();
+    $("body").css("margin-bottom", $("#touch").outerHeight(true) + "px");
   }
 
 });
