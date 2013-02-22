@@ -65,7 +65,20 @@ $(function() {
     $("#done, #next, #prev").hide();
   }
 
-  function gotoSlide(n, andPosition) {
+  function changeHash(hash, andScroll) {
+    if (andScroll) {
+      window.location.hash = hash;
+    }
+    else {
+      var $elem = $("#" + hash);
+      var id = $elem.attr("id");
+      $elem.attr("id", "temp-" + Math.random());
+      window.location.hash = hash;
+      $elem.attr("id", id);
+    }
+  }
+
+  function gotoSlide(n, andScroll) {
     moving = true;
     if (n < 0 || n >= totalSlides) {
       return;
@@ -81,15 +94,7 @@ $(function() {
     slide = n;
     $slides.not($slide).addClass("hidden");
     var id;
-    if (andPosition) {
-      window.location.hash = $slide.attr("id");
-    }
-    else {
-      id = $slide.attr("id");
-      $slide.attr("id", "please-be-patient");
-      window.location.hash = id;
-      $slide.attr("id", id);
-    }
+    changeHash($slide.attr("id"), andScroll);
 
     // The turd is my workaround for
     // https://github.com/scottjehl/Device-Bugs/issues/1
@@ -159,11 +164,15 @@ $(function() {
 
   }, 200))
   .on("scroll", debounce(function(e) {
-    if (!slideMode || moving) {
+    var $closestSlide = findClosestSlide();
+    if (moving) {
       return;
     }
-    var $closestSlide = findClosestSlide();
-    if ($closestSlide.attr("id") !== $slides.eq(slide).attr("id")) {
+    if (!slideMode) {
+      changeHash($closestSlide.attr("id"), false);
+    }
+    else if ($closestSlide.attr("id") !==
+             $slides.eq(slide).attr("id")) {
       gotoSlide($closestSlide);
     }
   }));
