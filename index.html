@@ -4,19 +4,21 @@
     <meta charset="utf-8">
     <title>Slide</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="slide.css">
+    <link rel="stylesheet" href="slide.css" media="screen">
     <script src="lib/jquery-1.9.0.min.js"></script>
     <script src="lib/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="slide.js"></script>
+
+    <script id="touch-template" type="template">
+      <div id="touch">
+        <button id="start">start presentation</button>
+        <button id="done">done</button>
+        <button id="prev">prev</button>
+        <button id="next">next</button>
+      </div>
+    </script>
   </head>
   <body>
-
-    <div id="touch">
-      <button id="start">start presentation</button>
-      <button id="done">done</button>
-      <button id="prev">prev</button>
-      <button id="next">next</button>
-    </div>
 
     <div id="wrapper">
 

@@ -177,22 +177,6 @@ $(function() {
     }
   }));
 
-  $("#start").on("click", debounce(function(e) {
-    enterSlideMode();
-  }));
-
-  $("#done").on("click", debounce(function(e) {
-    exitSlideMode();
-  }));
-
-  $("#next").on("click", debounce(function(e) {
-    gotoSlide(slide + 1, true);
-  }));
-
-  $("#prev").on("click", debounce(function(e) {
-    gotoSlide(slide - 1, true);
-  }));
-
   function debounce(func, threshold, execAsap) {
     var timeout;
     return function debounced () {
@@ -216,8 +200,25 @@ $(function() {
   };
 
   if (isTouchDevice()) {
-    $("#touch").show();
-    $("body").css("margin-bottom", $("#touch").outerHeight(true) + "px");
+    $("body")
+    .prepend($("#touch-template").text())
+    .css("margin-bottom", $("#touch").outerHeight(true) + "px");
+
+    $("#start").on("click", debounce(function(e) {
+      enterSlideMode();
+    }));
+
+    $("#done").on("click", debounce(function(e) {
+      exitSlideMode();
+    }));
+
+    $("#next").on("click", debounce(function(e) {
+      gotoSlide(slide + 1, true);
+    }));
+
+    $("#prev").on("click", debounce(function(e) {
+      gotoSlide(slide - 1, true);
+    }));
   }
 
 });
