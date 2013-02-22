@@ -4,7 +4,7 @@
 
 ## Check it out
 
-[Click this here hypertextual linker](http://static.incompl.com/slide/)
+[Demo](http://static.incompl.com/slide/)
 
 ## License
 
